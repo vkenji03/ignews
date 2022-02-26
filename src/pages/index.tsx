@@ -3,9 +3,6 @@
 
 import Head from 'next/head';
 
-// utilizar o CSS modules do next
-import styles from '../styles/home.module.scss';
-
 export default function Home() {
   return (
     <>
@@ -18,7 +15,7 @@ export default function Home() {
         <title>Inicio | ig.news</title>
       </Head>
       {/* utilizar o CSS modules do next */}
-      <h1 className={styles.title}>
+      <h1>
         Hello <span>World</span>
       </h1>
     </>
