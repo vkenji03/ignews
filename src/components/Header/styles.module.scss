@@ -51,4 +51,11 @@
       }
     }
   }
+
+  // aplicamos essa estilizacao do botao aqui, pois essa margin so deve ser aplicada nesse botao que esta dentro do Header
+  // ou seja, caso ele seja usado em um outro componente, provavelmente nos nao iremos querer que seja aplicada essa margin
+  button {
+    // ao fazer isso o browser da a maior margem possivel no lado esquerdo
+    margin-left: auto;
+  }
 }
