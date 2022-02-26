@@ -1,5 +1,5 @@
 // cada arquivo dentro de pages o next cria uma rota para ele
-// so pode usar export default quando utiliza o next
+// so precisa usar export default para os arquivos dentro de pages
 
 import Head from 'next/head';
 
