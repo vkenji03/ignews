@@ -4,7 +4,7 @@
 
 // SSR, SSG e API roots rodam no servidor node, ou seja, as variaveis ambiente ficam disponiveis nesses contextos
 
-// Em alguns casos podemos utilizar somente o Next ao inves de construir um back-end, pois o next executa um servidor node
+// Em alguns casos podemos utilizar somente o Next(API roots) ao inves de construir um back-end, pois o next executa um servidor node
 
 import { NextApiRequest, NextApiResponse } from 'next';
 
