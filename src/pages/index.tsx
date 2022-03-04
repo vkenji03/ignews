@@ -1,7 +1,7 @@
 // cada arquivo dentro de pages o next cria uma rota para ele
 // so precisa usar export default para os arquivos dentro de pages
 
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 
 import { stripe } from '../services/stripe';
@@ -61,8 +61,34 @@ export default function Home({ product }: HomeProps) {
  * Assim que se usa o SSR, a funcao precisa ser escrita dessa forma
  * Tudo o que eh retornado dentro de props pode ser acessado nas props dos componentes desse arquivo
 */
-export const getServerSideProps: GetServerSideProps = async () => {
-  // Todo codigo dentro dessa funcao eh executada no next(servidor node)
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   // Todo codigo dentro dessa funcao eh executada no next(servidor node)
+//   const price = await stripe.prices.retrieve('price_1KZ3swJgPt2vNe7OJfOJwRJw');
+
+//   const product = {
+//     priceId: price.id,
+//     amount: new Intl.NumberFormat('en-US', {
+//       style: 'currency',
+//       currency: 'USD'
+//     }).format(price.unit_amount / 100) // price eh retornado em centavos
+//   };
+
+//   return {
+//     props: {
+//       product
+//     }
+//   };
+// }
+
+/**
+ * O SSG funciona igual o SSR, porem o next salva um HTML estatico do que foi retornado para o browser com tudo o que foi executado
+ * utilizando SSG e em todas as proximas chamadas para essa pagina o que eh executado utilizando SSG, nao sera executado novamente,
+ * pois ja esta salvo no HTML estatico, ou seja, essa eh uma forma mais performatica, porem so pode ser usada com conteudos que devem
+ * ser iguais para todos, exemplo um post de um blog 
+*/
+
+// Assim que se usa o SSG
+export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve('price_1KZ3swJgPt2vNe7OJfOJwRJw');
 
   const product = {
@@ -70,12 +96,29 @@ export const getServerSideProps: GetServerSideProps = async () => {
     amount: new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
-    }).format(price.unit_amount / 100) // price eh retornado em centavos
-  };
+    }).format(price.unit_amount / 100)
+  }
 
   return {
     props: {
       product
-    }
-  };
+    },
+    // o tempo em segundos entre a geracao de um novo HTML estatico, ou seja, a cada 24 horas tudo que eh executado utilizando SSG eh
+    // executado novamente
+    revalidate: 60 * 60 * 24 // 24 horas
+  }
 }
+
+// Client-side rendering:
+// - pior opcao visando SEO(por exemplo se fizer chamdas API)
+// - deve ser utilizado com dados que podem ser carregados conforme o usuario utiliza a pagina ou que nao precisam ser renderizados
+// juntamente com a pagina, exemplo: comentarios de um blog
+// Server-side rendering:
+// - "trava" toda a pagina ate as requisicoes serem completadas
+// - pode ser utilizado com dados dinamicos ou dados que devem ser renderizados juntamente com a pagina
+// - melhor opcao para SEO
+// Static Site Generation:
+// - mais performatica que o SSR
+// - so pode ser utilizado com dados estaticos/que devem ser iguais para todos os usuarios ou dados que devem ser renderizados
+// juntamente com a pagina, exemplo: posts de um blog
+// - melhor opcao para SEO
