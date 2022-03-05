@@ -2,6 +2,11 @@
 // Com as API roots do next podemos criar aplicacoes que nao precisam ter um back end
 // Rodamos funcoes do back end no next quando elas estao muito atreladas ao front end
 
+// Somente o SSR, SSG e as API roots sao executadas no servidor node do next, ou seja, operacoes mais confidenciais: envio de email,
+// operacao no banco de dados, autenticacao de usuario, operacoes que utilizam secret keys, devem ser feitas de uma dessas tres
+// formas. Elas nao podem ser feitas no client side(front end, browser), pois tudo que eh executado no front end pode ser visto pelos
+// outros
+
 // Formas de autenticacao:
 // - JWT (Storage):
 //  - Melhor forma para aplicacoes que nao sao de grande porte
@@ -29,7 +34,7 @@ export default NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       // scope define o escopo da oauth
-      authorization: { params: { scope: 'read:user' } }
+      authorization: { params: { scope: 'read:user, user:email' } }
     })
   ]
 })
