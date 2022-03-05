@@ -34,7 +34,7 @@ export default NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       // scope define o escopo da oauth
-      authorization: { params: { scope: 'read:user, user:email' } }
+      authorization: { params: { scope: 'read:user' } }
     })
   ]
 })
