@@ -6,17 +6,22 @@
 
 import { AppProps } from 'next/app';
 import { Header } from '../components/Header';
+import { SessionProvider as NextAuthProvider } from 'next-auth/react';
 
 import '../styles/global.scss';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({
+  Component,
+  // ao dar um reload na pagina, ou fechar e abrir, as informacoes da sessao ativa do usuario chegam por pageProps.session
+  pageProps: { session, ...pageProps }
+}: AppProps) {
   return (
-    <>
+    <NextAuthProvider session={session}>
       {/* como o header vai estar em todas as paginas ele eh utilizado aqui */}
       <Header />
       {/* o componente de page sera renderizado aqui */}
       <Component {...pageProps} />
-    </>
+    </NextAuthProvider>
   )
 }
 
