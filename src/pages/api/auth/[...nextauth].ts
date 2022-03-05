@@ -1,3 +1,5 @@
+// Cada rota da API roots roda de forma serverless, ou seja, nao existe um servidor rodando 24/7
+
 // Formas de autenticacao:
 // - JWT (Storage):
 //  - Melhor forma para aplicacoes que nao sao de grande porte
