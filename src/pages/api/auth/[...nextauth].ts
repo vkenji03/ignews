@@ -1,4 +1,5 @@
 // Cada rota da API roots roda de forma serverless, ou seja, nao existe um servidor rodando 24/7
+// Com as API roots do next podemos criar aplicacoes que nao precisam ter um back end
 
 // Formas de autenticacao:
 // - JWT (Storage):
@@ -31,3 +32,4 @@ export default NextAuth({
     })
   ]
 })
+
